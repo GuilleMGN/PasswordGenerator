@@ -14,7 +14,7 @@ function getPasswordOptions() {
   var length = parseInt(prompt("How many characters do you want your password to have? "));
   // Alert user if password length is not a number
   if (isNaN(length) == true) {
-    alert("Password length must be a number! ");
+    alert("Error! Password length must be a number! ");
     return;
   }
   // Password length check between 8 and 128
@@ -45,8 +45,8 @@ function getPasswordOptions() {
   // Saves user input
   var passwordOptions = {
     length: length,
-    hasUpperCaseLetters: hasUpperCaseLetters,
-    hasLowerCaseLetters: hasLowerCaseLetters,
+    hasUppercaseLetters: hasUppercaseLetters,
+    hasLowercaseLetters: hasLowercaseLetters,
     hasNumbers: hasNumbers,
     hasSpecialCharacters: hasSpecialCharacters
   };
@@ -64,37 +64,38 @@ function getRandom(arr) {
 function generatePassword() {
   var userOptions = getPasswordOptions();
 
-  var result = [];
+  var finalPassword = [];
   var inputCharacters = [];
   var outputCharacters = [];
 
-  // Conditional statement if user selects a password character type it will output a random character from that array
-  if (userOptions.hasUpperCaseLetters)
-  {
+  // Conditional statement if user selects a password character type then it will output a random character from that array
+  if (userOptions.hasUppercaseLetters) {
     inputCharacters = inputCharacters.concat(uppercaseLetters);
     outputCharacters.push(getRandom(uppercaseLetters));
   }
-  if (userOptions.hasLowerCaseLetters)
-  {
+  if (userOptions.hasLowercaseLetters) {
     inputCharacters = inputCharacters.concat(lowercaseLetters);
     outputCharacters.push(getRandom(lowercaseLetters));
   }
-  if (userOptions.hasNumbers)
-  {
+  if (userOptions.hasNumbers) {
     inputCharacters = inputCharacters.concat(numbers);
     outputCharacters.push(getRandom(numbers));
   }
-  if (userOptions.hasSpecialCharacters)
-  {
+  if (userOptions.hasSpecialCharacters) {
     inputCharacters = inputCharacters.concat(specialCharacters);
     outputCharacters.push(getRandom(specialCharacters));
   }
+
+  for (var i = 0; i < userOptions.length; i++) {
+    var inputCharacter = getRandom(inputCharacters);
+    finalPassword.push(inputCharacter);
+  }
+
+  for (var i = 0; i < outputCharacters.length; i++) {
+    finalPassword[i] = outputCharacters[i];
+  }
+  return finalPassword.join("");
 }
-
-
-
-
-
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
@@ -103,7 +104,7 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
+  passwordText.textContent = "";
   passwordText.value = password;
 
 }
