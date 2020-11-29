@@ -23,7 +23,7 @@ function getPasswordOptions() {
     return;
   }
   else if (length > 128) {
-    alert("Password length must less than 129 characters! ");
+    alert("Password length must be no more than 128 characters! ");
     return;
   }
   // Ask to confirm Uppercase Letters
@@ -42,7 +42,7 @@ function getPasswordOptions() {
     alert("You did not select any characters for your password. Try again. ");
     return;
   }
-  // Saves user input
+  // Saves user input for each character type as true or false
   var passwordOptions = {
     length: length,
     hasUppercaseLetters: hasUppercaseLetters,
@@ -85,29 +85,27 @@ function generatePassword() {
     inputCharacters = inputCharacters.concat(specialCharacters);
     outputCharacters.push(getRandom(specialCharacters));
   }
-
+  // For Loop selecting random characters from user's requested length
   for (var i = 0; i < userOptions.length; i++) {
     var inputCharacter = getRandom(inputCharacters);
     finalPassword.push(inputCharacter);
   }
-
+  // Outputs result of at least one character
   for (var i = 0; i < outputCharacters.length; i++) {
     finalPassword[i] = outputCharacters[i];
   }
   return finalPassword.join("");
 }
 
-// Assignment Code
+// ASSIGNMENT CODE
 var generateBtn = document.querySelector("#generate");
-
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.textContent = "";
   passwordText.value = password;
-
+  alert("Your password has been generated! You can see it below now. ");
 }
-
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
